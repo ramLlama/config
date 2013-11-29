@@ -2,7 +2,7 @@
 set TEMP_FILE (mktemp)
 
 # Add toast to environment
-./.toast/armed/bin/toast env | \
+~/.toast/armed/bin/toast env | \
     sed -r 's/;.*$//;s/^([^=]+)=/set -x \1 /;s/:/ /g' > \
     "$TEMP_FILE"
 . "$TEMP_FILE"
