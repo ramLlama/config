@@ -1,11 +1,13 @@
 # Temp file for configuration
 set TEMP_FILE (mktemp)
 
-# Add toast to environment
-~/.toast/armed/bin/toast env | \
-    sed -r 's/;.*$//;s/^([^=]+)=/set -x \1 /;s/:/ /g' > \
-    "$TEMP_FILE"
-. "$TEMP_FILE"
+# Add toast to environment if it exists
+if test -x "~/.toast/armed/bin/toast"
+   ~/.toast/armed/bin/toast env | \
+       sed -r 's/;.*$//;s/^([^=]+)=/set -x \1 /;s/:/ /g' > \
+       "$TEMP_FILE"
+   . "$TEMP_FILE"
+end
 
 # Add cabal to environment
 set -x PATH {$HOME}/.cabal/bin {$PATH}
