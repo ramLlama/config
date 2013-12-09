@@ -2,7 +2,7 @@
 set TEMP_FILE (mktemp)
 
 # Add toast to environment if it exists
-if test -x "~/.toast/armed/bin/toast"
+if test -x "$HOME/.toast/armed/bin/toast"
    ~/.toast/armed/bin/toast env | \
        sed -r 's/;.*$//;s/^([^=]+)=/set -x \1 /;s/:/ /g' > \
        "$TEMP_FILE"
