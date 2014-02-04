@@ -13,7 +13,7 @@ end
 set -x PATH {$HOME}/.cabal/bin {$PATH}
 
 # Add scripts to PATH
-set -x PATH {$HOME}/scripts {$PATH}
+set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 
 if status --is-interactive
     # Start, if necessary, ssh-agent
