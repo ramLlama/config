@@ -39,5 +39,8 @@ if status --is-interactive
     set -x EDITOR editor
 end
 
+# Deduplicate PATH
+set -x PATH (echo $PATH | tr ' ' '\n' | perl -ne 'BEGIN { %seen = (); } chomp $_; if (!defined($seen{$_})) { print $_ . "\n"; $seen{$_} = 1; }')
+
 # Remove temp file
 rm "$TEMP_FILE"
