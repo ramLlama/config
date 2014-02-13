@@ -1,6 +1,9 @@
 # Temp file for configuration
 set TEMP_FILE (mktemp)
 
+# Add system directories to PATH
+set -x PATH {$PATH} /bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin
+
 # Add toast to environment if it exists
 if test -x "$HOME/.toast/armed/bin/toast"
    ~/.toast/armed/bin/toast env | \
@@ -12,7 +15,7 @@ end
 # Add cabal to environment
 set -x PATH {$HOME}/.cabal/bin {$PATH}
 
-# Add scripts to PATH
+# Add local scripts and bin to PATH
 set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 
 if status --is-interactive
