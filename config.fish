@@ -18,6 +18,9 @@ set -x PATH {$HOME}/.cabal/bin {$PATH}
 # Add rubygems to environment
 set -x PATH {$HOME}/.gem/ruby/2.0.0/bin {$PATH}
 
+# Add ccache to PATH
+set -x PATH /usr/lib/ccache {$PATH}
+
 # Add local scripts and bin to PATH
 set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 
