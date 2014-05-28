@@ -12,11 +12,8 @@ if test -x "$HOME/.toast/armed/bin/toast"
    . "$TEMP_FILE"
 end
 
-# Add cabal to environment
-set -x PATH {$HOME}/.cabal/bin {$PATH}
-
-# Add rubygems to environment
-set -x PATH {$HOME}/.gem/ruby/2.0.0/bin {$PATH}
+# Add various ecosystem-specific bin paths
+set -x PATH {$HOME}/.cabal/bin {$HOME}/.gem/ruby/2.0.0/bin /usr/bin/core_perl {$PATH}
 
 # Add ccache to PATH
 set -x PATH /usr/lib/ccache {$PATH}
