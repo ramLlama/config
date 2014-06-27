@@ -1,1 +1,3 @@
-xmodmap .xmodmap
+/usr/bin/xmodmap .xmodmap
+/usr/bin/start-pulseaudio-x11
+/usr/bin/lockrun -w 5 /var/run/ram/feh-wallpaper-shuffle.sh.lock /home/ram/scripts/feh-wallpaper-shuffle.sh /home/ram/wallpapers 15m &
