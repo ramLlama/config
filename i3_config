@@ -12,7 +12,7 @@
 set $mod Mod4
 
 # font for window titles.
-font xft:Inconsolata\-dz 9
+font pango:Source Code Pro 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -22,6 +22,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+End kill
+bindsym $mod+Shift+Q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+q exec gmrun
@@ -115,7 +116,7 @@ bindsym $mod+Shift+C reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+R restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+E exit
+bindsym $mod+Control+Shift+Q exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
