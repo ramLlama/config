@@ -28,7 +28,7 @@ bindsym $mod+Shift+Q kill
 bindsym $mod+q exec gmrun
 
 # lock session
-bindsym $mod+x exec gnome-screensaver-command -l
+bindsym $mod+x exec dm-tool lock
 
 # change focus
 bindsym $mod+j focus left
