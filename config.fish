@@ -24,6 +24,11 @@ set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 ############################################
 # Add various ecosystem-specific bin paths #
 ############################################
+# LaTeX
+set -x PATH /usr/local/texlive/2013/bin/x86_64-linux {$PATH}
+set -x INFOPATH /usr/local/texlive/2013/texmf-dist/doc/info {$INFOPATH}
+set -x MANPATH /usr/local/texlive/2013/texmf-dist/doc/man {$MANPATH}
+
 # ruby/gem
 # only need to set if gem is installed
 which gem >/dev/null ^&1
