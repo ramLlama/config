@@ -5,3 +5,6 @@
 # Keybindings
 /usr/bin/xmodmap .xmodmap
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/xbindkeys.lock xbindkeys -n &
+
+# Dropbox
+/usr/bin/dropboxd &
