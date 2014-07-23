@@ -10,3 +10,6 @@ export PATH=$(fish -c 'echo $PATH' | tr ' ' ':')
 
 # Dropbox
 /usr/bin/dropboxd &
+
+# redshift
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/redshift.lock redshift -l 40.4428:79.9532 -t 5500:5000 &
