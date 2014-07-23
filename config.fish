@@ -1,10 +1,14 @@
 # Temp file for configuration
 set TEMP_FILE (mktemp)
 
-# Add system directories to PATH
+##################################
+# Add system directories to PATH #
+##################################
 set -x PATH {$PATH} /bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin
 
-# Add toast to environment if it exists
+#########################################
+# Add toast to environment if it exists #
+#########################################
 if test -x "$HOME/.toast/armed/bin/toast"
    ~/.toast/armed/bin/toast env | \
        sed -r 's/;.*$//;s/^([^=]+)=/set -x \1 /;s/:/ /g' > \
@@ -12,15 +16,29 @@ if test -x "$HOME/.toast/armed/bin/toast"
    . "$TEMP_FILE"
 end
 
-# Add various ecosystem-specific bin paths
-set -x PATH {$HOME}/.cabal/bin {$HOME}/.gem/ruby/2.0.0/bin /usr/bin/core_perl {$PATH}
-
-# Add ccache to PATH
-set -x PATH /usr/lib/ccache {$PATH}
-
-# Add local scripts and bin to PATH
+#####################################
+# Add local scripts and bin to PATH #
+#####################################
 set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 
+############################################
+# Add various ecosystem-specific bin paths #
+############################################
+# perl
+set -x PATH /usr/bin/core_perl {$PATH}
+
+# ruby
+set -x PATH {$HOME}/.gem/ruby/(ruby --version | cut -d' ' -f2 | perl -ne 'if (/(\d+\.\d+)\.\d+/) { print $1 . ".0\n"; }')/bin {$PATH}
+
+# haskell/cabal
+set -x PATH {$HOME}/.cabal/bin {$PATH}
+
+# ccache
+set -x PATH /usr/lib/ccache {$PATH}
+
+###################
+# ssh-agent Setup #
+###################
 if status --is-interactive
     # Start, if necessary, ssh-agent
     # Stolen from https://gist.github.com/daniel-perry/3251940
@@ -44,8 +62,12 @@ if status --is-interactive
     set -x EDITOR editor
 end
 
-# Deduplicate PATH
+####################
+# Deduplicate PATH #
+####################
 set -x PATH (echo $PATH | tr ' ' '\n' | perl -ne 'BEGIN { %seen = (); } chomp $_; if (!defined($seen{$_})) { print $_ . "\n"; $seen{$_} = 1; }')
 
-# Remove temp file
+####################
+# Remove temp file #
+####################
 rm "$TEMP_FILE"
