@@ -24,17 +24,24 @@ set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 ############################################
 # Add various ecosystem-specific bin paths #
 ############################################
-# perl
-set -x PATH /usr/bin/core_perl {$PATH}
-
-# ruby
-set -x PATH {$HOME}/.gem/ruby/(ruby --version | cut -d' ' -f2 | perl -ne 'if (/(\d+\.\d+)\.\d+/) { print $1 . ".0\n"; }')/bin {$PATH}
+# ruby/gem
+# only need to set if gem is installed
+which gem >/dev/null ^&1
+if test $status = 0
+   set -x PATH (gem environment gempath | tr ':' '\n' | perl -ne "chomp \$_; if (m|^$HOME/.gem|) { print \$_ . \"\n\"; exit 0; }")/bin {$PATH}
+end
 
 # haskell/cabal
-set -x PATH {$HOME}/.cabal/bin {$PATH}
+set CABAL_BIN_PATH {$HOME}/.cabal/bin
+if test -d $CABAL_BIN_PATH
+   set -x PATH $CABAL_BIN_PATH {$PATH}
+end
 
 # ccache
-set -x PATH /usr/lib/ccache {$PATH}
+set CCACHE_BIN_PATH /usr/lib/ccache
+if test -d $CCACHE_BIN_PATH
+   set -x PATH $CCACHE_BIN_PATH {$PATH}
+end
 
 ###################
 # ssh-agent Setup #
