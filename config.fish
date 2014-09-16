@@ -52,10 +52,10 @@ end
 ###################
 # ssh-agent Setup #
 ###################
+set -x SSH_AUTH_SOCK {$HOME}/.ssh/ssh-agent-socket
 if status --is-interactive
     # Start, if necessary, ssh-agent
     # Stolen from https://gist.github.com/daniel-perry/3251940
-    set -x SSH_AUTH_SOCK {$HOME}/.ssh/ssh-agent-socket
     ssh-add -l ^ /dev/null > "$TEMP_FILE"
     set SSH_ADD_STATUS $status
     set SSH_AGENT_NUM_KEYS (cat "$TEMP_FILE" | wc -l)
@@ -70,10 +70,12 @@ if status --is-interactive
 	echo $SSH_AGENT_PID > $HOME/.ssh/ssh-agent.pid
 	ssh-add
     end
-
-    # Set EDITOR to editor
-    set -x EDITOR editor
 end
+
+###############################
+# Other environment variables #
+###############################
+set -x EDITOR editor
 
 ####################
 # Deduplicate PATH #
