@@ -172,6 +172,7 @@ bar {
     urgent_workspace #dc322f #dc322f #657b83
   }
   status_command i3status
+  tray_output DVI-1
 }
 
 ####################
