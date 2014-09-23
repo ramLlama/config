@@ -1,6 +1,6 @@
 # Setup environment variables
 export PATH=$(fish -c 'echo $PATH' | tr ' ' ':')
-export SSH_AUTH_SOCK=$(fish -c 'echo $SSH_AUTH_SOCK"')
+export SSH_AUTH_SOCK=$(fish -c 'echo $SSH_AUTH_SOCK')
 
 # Daemons
 /usr/bin/start-pulseaudio-x11
