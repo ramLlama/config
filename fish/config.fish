@@ -48,6 +48,9 @@ if test -d $CCACHE_BIN_PATH
    set -x PATH $CCACHE_BIN_PATH {$PATH}
 end
 
+# perl
+eval (perl -Mlocal::lib | sed 's/export/set -x/' | tr '=' ' ' | sed 's/:/" "/g' | sed 's/"\$PATH"/\$PATH/g')
+
 ###################
 # ssh-agent Setup #
 ###################
