@@ -11,36 +11,38 @@ general {
         interval = 5
 }
 
-order += "ethernet eno1"
-order += "ipv6"
+order += "wireless wlp3s0"
+order += "ethernet enp0s25"
 order += "disk /"
-order += "run_watch DHCP"
 order += "load"
+order += "battery 0"
 order += "tztime local"
+
+wireless wlp3s0 {
+        format_up = "W: (%quality at %essid, %bitrate)"
+        format_down = "W: down"
+}
 
 ethernet eno1 {
         # if you use %speed, i3status requires root privileges
-        format_up = "IPv4: %ip"
-        format_down = "eno1 down"
-}
-
-ipv6 {
-     format_up = "%ip"
-     format_down = "IPv6 down"
-}
-
-run_watch DHCP {
-        pidfile = "/var/run/dhcpcd.pid"
-}
-
-tztime local {
-        format = "%Y-%m-%d %H:%M:%S"
+        format_up = "E: up"
+        format_down = "E: down"
 }
 
 load {
         format = "%1min"
 }
 
-disk "/" {
-        format = "%avail"
+battery 0 {
+        format = "%status %percentage %remaining %emptytime"
+        format_down = "No battery"
+        status_chr = "⚇ CHR""
+        status_bat = "⚡ BAT"
+        status_full = "☻ FULL"
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 10
+}
+
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
 }
