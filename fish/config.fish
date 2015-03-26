@@ -86,3 +86,8 @@ set -x PATH (echo $PATH | tr ' ' '\n' | perl -ne 'BEGIN { %seen = (); } chomp $_
 # Remove temp file #
 ####################
 rm "$TEMP_FILE"
+
+##################
+# Load Solarized #
+##################
+. ./solarized.fish
