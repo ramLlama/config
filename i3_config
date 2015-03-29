@@ -25,7 +25,7 @@ bindsym $mod+End kill
 bindsym $mod+Shift+Q kill
 
 # lock session
-bindsym $mod+x exec light-locker-command --lock
+bindsym $mod+x exec dm-tool lock
 
 # change focus
 bindsym $mod+j focus left
