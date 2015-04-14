@@ -9,10 +9,8 @@ set -x PATH {$PATH} /bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin
 #########################################
 # Add toast to environment if it exists #
 #########################################
-if test -x "$HOME/.toast/armed/bin/toast"
-   ~/.toast/armed/bin/toast env | \
-       sed -r 's/;.*$//;s/^([^=]+)=/set -x \1 /;s/:/ /g' > \
-       "$TEMP_FILE"
+if test -x $HOME/.toast/armed/bin/toast
+   ~/.toast/armed/bin/toast env fish > "$TEMP_FILE"
    . "$TEMP_FILE"
 end
 
