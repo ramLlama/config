@@ -1,0 +1,7 @@
+#! /usr/bin/env bash
+kill $(ps aux | grep "bash /home/ram/scripts/feh-wallpaper-shuffle.sh" | awk '{print $2;}' | head -n1)
+kill $(pidof -s dropbox)
+kill $(pidof -s redshift)
+kill $(pidof -s dunst)
+kill $(ps aux | grep "bash /usr/bin/devmon" | awk '{print $2;}' | head -n1)
+kill $(pidof -s xbindkeys)
