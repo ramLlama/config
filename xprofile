@@ -9,6 +9,7 @@ export SSH_AUTH_SOCK=$(fish -c 'echo $SSH_AUTH_SOCK')
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/redshift.lock redshift -t 5500:3700 &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/dunst.lock dunst &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/devmon.lock devmon --sync &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/syndaemon.lock syndaemon -i 0.5 &
 
 # Keybindings
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/xbindkeys.lock xbindkeys -n &
@@ -18,4 +19,4 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
 xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
-xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.60
+xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
