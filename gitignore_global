@@ -1,0 +1,4 @@
+auctex/
+*.aux
+*.log
+*.synctex.gz
