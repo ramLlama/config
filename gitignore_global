@@ -2,3 +2,5 @@ auctex/
 *.aux
 *.log
 *.synctex.gz
+*.fdb_latexmk
+*.fls
