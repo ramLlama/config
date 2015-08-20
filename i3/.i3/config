@@ -184,6 +184,11 @@ bindsym $mod+q exec gmrun
 for_window [class="Gmrun"] floating enable
 for_window [class="Gmrun"] border none
 
-# redshift-toggle
+# Others
 bindsym $mod+t exec redshift-toggle.sh
 bindsym $mod+d exec dpms-toggle.sh
+
+###################
+# Sartup Programs #
+###################
+exec --no-startup-id ibus-daemon -drx
