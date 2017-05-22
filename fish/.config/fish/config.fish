@@ -90,4 +90,4 @@ rm "$TEMP_FILE"
 ##################
 # Load Solarized #
 ##################
-. ./solarized.fish
+. $HOME/.config/fish/solarized.fish
