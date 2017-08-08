@@ -57,6 +57,7 @@ set -g fish_color_match       $cyan
 set -g fish_color_search_match "--background=$base02"
 set -g fish_color_operator    $orange
 set -g fish_color_escape      $cyan
+set -g fish_color_autosuggestion $green
 
 # Used by fish_prompt
 
