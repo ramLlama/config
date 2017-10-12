@@ -20,7 +20,7 @@ order += "disk /"
 order += "cpu_usage"
 order += "battery 0"
 order += "battery 1"
-order += "battery combined"
+order += "battery consolidated"
 order += "volume master"
 order += "tztime local"
 
@@ -44,32 +44,35 @@ cpu_usage {
 }
 
 battery 0 {
-  format = "BAT 0 : %status %percentage %remaining %emptytime"
+  format = "BAT 0 : %status %percentage"
   format_down = "No battery"
-  status_chr = "⚇ CHR"
-  status_bat = "⚡ DCR"
-  status_full = "☻ FULL"
+  status_chr = "🗲 "
+  status_bat = "◒ "
+  status_full = "⬤ "
+  status_unk = "⮾ "
   path = "/sys/class/power_supply/BAT%d/uevent"
   low_threshold = 10
 }
 
 battery 1 {
-  format = "BAT 1 : %status %percentage %remaining %emptytime"
+  format = "BAT 1 : %status %percentage"
   format_down = "No battery"
-  status_chr = "⚇ CHR"
-  status_bat = "⚡ DCR"
-  status_full = "☻ FULL"
+  status_chr = "🗲 "
+  status_bat = "◒ "
+  status_full = "⬤ "
+  status_unk = "⮾ "
   path = "/sys/class/power_supply/BAT%d/uevent"
   low_threshold = 10
 }
 
-battery combined {
-  format = "BAT: %status %percentage %remaining %emptytime"
+battery consolidated {
+  format = "PWR: %status %remaining %emptytime"
   format_down = "No battery"
-  status_chr = "⚇ CHR"
-  status_bat = "⚡ DCR"
-  status_full = "☻ FULL"
-  path = "/home/ram/.uevent"
+  status_chr = "🗲 "
+  status_bat = "◒ "
+  status_full = "⬤ "
+  status_unk = "⮾ "
+  path = "/run/user/1000/battcon.uevent"
   low_threshold = 10
 }
 
