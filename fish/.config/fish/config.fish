@@ -27,6 +27,7 @@ set PERL_BIN_PATH /usr/bin/core_perl
 if test -d $PERL_BIN_PATH
    set -x PATH $PERL_BIN_PATH {$PATH}
 end
+eval (perl -Mlocal::lib)
 
 # ruby/gem
 # only need to set if gem is installed
