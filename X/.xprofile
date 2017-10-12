@@ -5,6 +5,7 @@ export SSH_AUTH_SOCK=$(fish -c 'echo $SSH_AUTH_SOCK')
 # Daemons
 /usr/bin/start-pulseaudio-x11
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/feh-wallpaper-shuffle.sh.lock /home/ram/scripts/feh-wallpaper-shuffle.sh /home/ram/Dropbox/wallpapers 15m &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/dropboxd.lock /home/ram/.dropbox-dist/dropboxd &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/redshift.lock redshift -t 5500:3700 &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/dunst.lock dunst &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/devmon.lock devmon --sync &
