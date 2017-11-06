@@ -1,9 +1,8 @@
 #! /usr/bin/env bash
-kill $(ps aux | grep "bash /home/ram/scripts/feh-wallpaper-shuffle.sh" | awk '{print $2;}' | head -n1)
-kill $(pidof -s dropbox)
-kill $(pidof -s redshift)
-kill $(pidof -s dunst)
-kill $(ps aux | grep "bash /usr/bin/devmon" | awk '{print $2;}' | head -n1)
-kill $(pidof -s xbindkeys)
-kill $(pidof -s syndaemon)
-kill $(pidof -sx battcon.sh)
+pkill -u ram blueman-applet
+pkill -u ram dropbox
+pkill -u ram dunst
+pkill -u ram -f 'bash [^ ]*feh-wallpaper-shuffle.sh'
+pkill -u ram redshift
+pkill -u ram syndaemon
+pkill -u ram xbindkeys

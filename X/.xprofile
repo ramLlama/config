@@ -4,15 +4,13 @@ export SSH_AUTH_SOCK=$(fish -c 'echo $SSH_AUTH_SOCK')
 
 # Daemons
 /usr/bin/start-pulseaudio-x11
-/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/feh-wallpaper-shuffle.sh.lock /home/ram/scripts/feh-wallpaper-shuffle.sh /home/ram/Dropbox/wallpapers 15m &
-/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/dropboxd.lock /usr/bin/dropbox &
-/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/redshift.lock redshift -t 5500:3700 &
-/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/dunst.lock dunst &
-/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/devmon.lock devmon --sync &
-/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/syndaemon.lock syndaemon -i 0.5 &
-/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/batt.lock $HOME/scripts/battcon.sh -i 0.5 &
 
-# Keybindings
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/blueman-applet.lock blueman-applet &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/dropbox.lock /usr/bin/dropbox &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/dunst.lock dunst &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/feh-wallpaper-shuffle.sh.lock $HOME/scripts/feh-wallpaper-shuffle.sh /home/ram/Dropbox/wallpapers 15m &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/redshift.lock redshift -t 5500:3700 &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/syndaemon.lock syndaemon -i 0.5 &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/xbindkeys.lock xbindkeys -n &
 
 # Trackpoint Middle Button
