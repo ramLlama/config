@@ -46,10 +46,10 @@ cpu_usage {
 battery 0 {
   format = "BAT 0 : %status %percentage"
   format_down = "No battery"
-  status_chr = "🗲 "
-  status_bat = "◒ "
-  status_full = "⬤ "
-  status_unk = "⮾ "
+  status_chr = "⚡"
+  status_bat = "▤"
+  status_full = "◼"
+  status_unk = "?"
   path = "/sys/class/power_supply/BAT%d/uevent"
   low_threshold = 10
 }
@@ -57,10 +57,10 @@ battery 0 {
 battery 1 {
   format = "BAT 1 : %status %percentage"
   format_down = "No battery"
-  status_chr = "🗲 "
-  status_bat = "◒ "
-  status_full = "⬤ "
-  status_unk = "⮾ "
+  status_chr = "⚡"
+  status_bat = "▤"
+  status_full = "◼"
+  status_unk = "?"
   path = "/sys/class/power_supply/BAT%d/uevent"
   low_threshold = 10
 }
@@ -68,10 +68,10 @@ battery 1 {
 battery consolidated {
   format = "PWR: %status %remaining %emptytime"
   format_down = "No battery"
-  status_chr = "🗲 "
-  status_bat = "◒ "
-  status_full = "⬤ "
-  status_unk = "⮾ "
+  status_chr = "⚡ CHR"
+  status_bat = "▤ BAT"
+  status_full = "◼ FULL"
+  status_unk = "? UNK"
   path = "/run/user/1000/battcon.uevent"
   low_threshold = 10
 }
