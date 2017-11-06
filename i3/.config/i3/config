@@ -180,7 +180,7 @@ bar {
 ####################
 
 # gmrun
-bindsym $mod+q exec gmrun
+bindsym $mod+q exec rofi -show run -location 1
 for_window [class="Gmrun"] floating enable
 for_window [class="Gmrun"] border none
 
