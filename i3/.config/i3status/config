@@ -72,7 +72,7 @@ battery consolidated {
   status_bat = "▤ BAT"
   status_full = "◼ FULL"
   status_unk = "? UNK"
-  path = "/run/user/1000/battcon.uevent"
+  path = "/run/battcon.uevent"
   low_threshold = 10
 }
 
