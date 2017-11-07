@@ -25,7 +25,7 @@ bindsym $mod+End kill
 bindsym $mod+Shift+Q kill
 
 # lock session
-bindsym $mod+x exec light-locker-command --lock
+bindsym $mod+x exec /usr/bin/i3lock --image=$HOME/.config/i3/lock-screen.png --textcolor=ffffffff --clock --timepos="0:0" --timecolor=ffffffff --timesize=40 --datecolor=ffffffff --datesize=18 --show-failed-attempts
 
 # change focus
 bindsym $mod+j focus left
