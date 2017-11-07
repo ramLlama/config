@@ -17,15 +17,9 @@ font pango:Source Code Pro 10
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec terminology
-
 # kill focused window
 bindsym $mod+End kill
 bindsym $mod+Shift+Q kill
-
-# lock session
-bindsym $mod+x exec /usr/bin/i3lock --image=$HOME/.config/i3/lock-screen.png --textcolor=ffffffff --clock --timepos="0:0" --timecolor=ffffffff --timesize=40 --datecolor=ffffffff --datesize=18 --show-failed-attempts
 
 # change focus
 bindsym $mod+j focus left
@@ -155,19 +149,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-####################
-# Program Settings #
-####################
-
-# gmrun
-bindsym $mod+q exec rofi -show run -location 1
-for_window [class="Gmrun"] floating enable
-for_window [class="Gmrun"] border none
-
-# redshift-toggle
-bindsym $mod+t exec redshift-toggle.sh
-bindsym $mod+d exec dpms-toggle.sh
-
 ################
 # Bar Settings #
 ################
@@ -177,18 +158,22 @@ bindsym $mod+d exec dpms-toggle.sh
 bar {
   status_command i3status
 
-  # colors {
-  #   background #002b36
-  #   #657b83
-  #   statusline #ffffff
-
-  #   focused_workspace #268bd2 #268bd2 #eee8d5
-  #   active_workspace #2aa198 #2aa198 #eee8d5
-  #   inactive_workspace #073642 #073642 #657b83
-  #   urgent_workspace #dc322f #dc322f #657b83
-  # }
-
   # $i3-theme-bar
 }
+
+###########
+# Hotkeys #
+###########
+bindsym $mod+q exec rofi -show run -location 1
+bindsym $mod+t exec redshift-toggle.sh
+bindsym $mod+d exec dpms-toggle.sh
+bindsym $mod+Return exec terminology
+bindsym $mod+x exec /usr/bin/i3lock --image=$HOME/.config/i3/lock-screen.png --textcolor=ffffffff --clock --timepos="0:0" --timecolor=ffffffff --timesize=40 --datecolor=ffffffff --datesize=18 --show-failed-attempts
+
+#####################
+# Program Overrides #
+#####################
+# Floating Windows
+for_window [class="(Gmrun|Pinentry)"] floating enable
 
 # $i3-theme-window
