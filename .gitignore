@@ -1,2 +1,6 @@
 # i3
 i3/.config/i3/config
+
+# fish
+fish/.config/fish/conf.d/
+fish/.config/fish/fishd.llama-hyperplane
