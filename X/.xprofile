@@ -15,4 +15,5 @@ export QT_IM_MODULE=ibus
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/redshift.lock redshift -l 40.4428:-79.9532 -t 5500:3700 &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/devmon.lock devmon --sync &
 /usr/bin/lockrun -w 5 /run/user/`id -u $USER`/xbindkeys.lock xbindkeys -n &
+/usr/bin/lockrun -w 5 /run/user/`id -u $USER`/blueman-applet.lock blueman-applet &
 pulseaudio --start
