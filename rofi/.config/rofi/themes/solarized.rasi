@@ -123,7 +123,7 @@
     text-color: @normal-foreground;
 }
 #entry {
-    spacing:    0;
+    spacing:    100px;
     text-color: @normal-foreground;
 }
 #prompt {
