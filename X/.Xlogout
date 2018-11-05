@@ -5,3 +5,4 @@ pkill -u ram dunst
 pkill -u ram -f 'bash [^ ]*feh-wallpaper-shuffle.sh'
 pkill -u ram syndaemon
 pkill -u ram xbindkeys
+pkill -u ram --full 'indicator-kdeconnect'
