@@ -1,8 +1,9 @@
-#! /usr/bin/env bash
-pkill -u ram blueman-applet
-pkill -u ram dropbox
-pkill -u ram dunst
-pkill -u ram -f 'bash [^ ]*feh-wallpaper-shuffle.sh'
-pkill -u ram syndaemon
-pkill -u ram xbindkeys
-pkill -u ram --full 'indicator-kdeconnect'
+dstop() {
+service=$1
+systemctl --user stop daemons@${service}
+}
+
+dstop kdeconnect
+dstop pasystray
+dstop wicd-gtk
+dstop blueman-applet
