@@ -8,13 +8,6 @@ systemctl --user restart daemons@${service}
 export PATH=$(fish -c 'echo $PATH' | tr ' ' ':')
 export SSH_AUTH_SOCK=$(fish -c 'echo $SSH_AUTH_SOCK')
 
-# Trackpoint Middle Button
-xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation" 1
-xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Button" 2
-xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Timeout" 200
-xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
-xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
-
 # Make sure geoclue starts before redshift
 drestart geoclue
 
