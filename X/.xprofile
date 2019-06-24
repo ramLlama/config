@@ -28,3 +28,4 @@ drestart pasystray
 drestart wicd-gtk
 drestart xss-lock
 drestart clight
+drestart libinput-gestures

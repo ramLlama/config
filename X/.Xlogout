@@ -7,3 +7,4 @@ dstop kdeconnect
 dstop pasystray
 dstop wicd-gtk
 dstop blueman-applet
+dstop libinput-gestures
