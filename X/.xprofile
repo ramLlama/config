@@ -16,7 +16,7 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 xinput set-prop "TPPS/2 IBM TrackPoint" "Device Accel Constant Deceleration" 0.40
 
 # Make sure geoclue starts before redshift
-dstart geoclue
+drestart geoclue
 
 # Remaining Daemons
 drestart blueman-applet
@@ -26,3 +26,5 @@ drestart xbindkeys
 drestart kdeconnect
 drestart pasystray
 drestart wicd-gtk
+drestart xss-lock
+drestart clight
