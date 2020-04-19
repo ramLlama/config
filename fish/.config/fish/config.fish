@@ -31,7 +31,7 @@ eval (perl -Mlocal::lib)
 
 # ruby/gem
 # only need to set if gem is installed
-which gem >/dev/null ^&1
+which gem &>/dev/null
 if test $status = 0
    set -x PATH (gem environment gempath | tr ':' '\n' | perl -ne "chomp \$_; if (m|^$HOME/.gem|) { print \$_ . \"\n\"; exit 0; }")/bin {$PATH}
 end
@@ -55,12 +55,12 @@ set -x SSH_AUTH_SOCK {$HOME}/.ssh/ssh-agent-socket
 if status --is-interactive
     # Start, if necessary, ssh-agent
     # Stolen from https://gist.github.com/daniel-perry/3251940
-    ssh-add -l ^ /dev/null > "$TEMP_FILE"
+    ssh-add -l > "$TEMP_FILE" 2> /dev/null
     set SSH_ADD_STATUS $status
     set SSH_AGENT_NUM_KEYS (cat "$TEMP_FILE" | wc -l)
     if test \( {$SSH_ADD_STATUS} != 0 \) -o \( {$SSH_AGENT_NUM_KEYS} = 0 \)
 	# kill ssh-agent and start from a clean slate
-	killall ssh-agent ^ /dev/null
+	killall ssh-agent 2> /dev/null
 	rm -f {$SSH_AUTH_SOCK}
 	ssh-agent -a {$SSH_AUTH_SOCK} -c | \
 	    sed 's/^setenv/set -x/' | \
