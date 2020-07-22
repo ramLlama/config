@@ -55,7 +55,7 @@ set -x SSH_AUTH_SOCK {$HOME}/.ssh/ssh-agent-socket
 if status --is-interactive
     # Start, if necessary, ssh-agent
     # Stolen from https://gist.github.com/daniel-perry/3251940
-    ssh-add -l > "$TEMP_FILE" 2> /dev/null
+    ssh-add -l 2> /dev/null > "$TEMP_FILE"
     set SSH_ADD_STATUS $status
     set SSH_AGENT_NUM_KEYS (cat "$TEMP_FILE" | wc -l)
     if test \( {$SSH_ADD_STATUS} != 0 \) -o \( {$SSH_AGENT_NUM_KEYS} = 0 \)
