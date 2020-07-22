@@ -81,6 +81,11 @@ set -x EDITOR editor
 ####################
 set -x PATH (echo $PATH | tr ' ' '\n' | perl -ne 'BEGIN { %seen = (); } chomp $_; if (!defined($seen{$_})) { print $_ . "\n"; $seen{$_} = 1; }')
 
+##########################################
+# Program-specific Environment Variables #
+##########################################
+set -x RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/ripgrep.rc
+
 ####################
 # Remove temp file #
 ####################
