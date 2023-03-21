@@ -27,7 +27,10 @@ set PERL_BIN_PATH /usr/bin/core_perl
 if test -d $PERL_BIN_PATH
    set -x PATH $PERL_BIN_PATH {$PATH}
 end
-eval (perl -Mlocal::lib)
+perl -Mlocal::lib &>/dev/null
+if test $status = 0
+   eval (perl -Mlocal::lib)
+end
 
 # ruby/gem
 # only need to set if gem is installed
@@ -47,6 +50,28 @@ set CCACHE_BIN_PATH /usr/lib/ccache
 if test -d $CCACHE_BIN_PATH
    set -x PATH $CCACHE_BIN_PATH {$PATH}
 end
+
+# nvm
+if test -e $HOME/.nvm/nvm.sh
+   function nvm
+      bass source $HOME/.nvm/nvm.sh --no-use ';' nvm $argv
+   end
+end
+
+#
+# Python
+#
+# First Homebrew python
+set HOMEBREW_PYTHON_BIN (brew --prefix)/opt/python/libexec/bin
+if test -e $HOMEBREW_PYTHON_BIN
+   set -x PATH $HOMEBREW_PYTHON_BIN {$PATH}
+end
+
+#
+# ASDF
+#
+source /usr/local/opt/asdf/libexec/asdf.fish
+
 
 ###################
 # ssh-agent Setup #
