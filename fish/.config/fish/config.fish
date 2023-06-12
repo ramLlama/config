@@ -68,10 +68,20 @@ if test -e $HOMEBREW_PYTHON_BIN
 end
 
 #
-# ASDF
+# rtx
 #
-source /usr/local/opt/asdf/libexec/asdf.fish
+set RTX_SHIMS_DIR {$HOME}/.local/share/rtx/shims
+if test -d "$RTX_SHIMS_DIR"
+   set -x PATH $RTX_SHIMS_DIR {$PATH}
+end
 
+#
+# direnv
+#
+which direnv &>/dev/null
+if test $status = 0
+   direnv hook fish | source
+end
 
 ###################
 # ssh-agent Setup #
