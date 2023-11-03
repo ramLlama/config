@@ -6,12 +6,49 @@ set TEMP_FILE (mktemp)
 ##################################
 set -x PATH {$PATH} /bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin
 
+###############
+# MacOS setup #
+###############
+# Use homebrew as test of "am I on MacOS?"
+set HOMEBREW_BIN_DIR /opt/homebrew/bin
+if test -d $HOMEBREW_BIN_DIR
+    set -x PATH $HOMEBREW_BIN_DIR {$PATH}
+    brew shellenv fish | source
+
+    # Add LLVM paths if installed
+    if test -d $HOMEBREW_PREFIX/opt/llvm
+        set -x PATH $HOMEBREW_PREFIX/opt/llvm/bin {$PATH}
+        set -x CPATH $HOMEBREW_PREFIX/opt/llvm/include {$CPATH}
+        set -x LIBRARY_PATH \
+            $HOMEBREW_PREFIX/opt/llvm/lib \
+            $HOMEBREW_PREFIX/opt/llvm/lib/c++ \
+            {$LIBRARY_PATH}
+        set -x LDFLAGS "-Wl,-rpath,$HOMEBREW_PREFIX/opt/llvm/lib/c++"
+    end
+
+    # we're in homebrew, add relevant gnubin directories
+    for GNU_BIN_DIR in \
+        $HOMEBREW_PREFIX/opt/findutils/libexec/gnubin \
+        $HOMEBREW_PREFIX/opt/make/libexec/gnubin
+        if test -d $GNU_BIN_DIR
+            set -x PATH $GNU_BIN_DIR {$PATH}
+        end
+    end
+
+    # Prefix standard header and library paths
+    set -x CPATH $HOMEBREW_PREFIX/include {$CPATH}
+    set -x LIBRARY_PATH $HOMEBREW_PREFIX/lib {$LIBRARY_PATH}
+
+    # terminfo
+    set -x TERMINFO_DIRS {$TERMINFO_DIRS} $HOME/.local/share/terminfo
+end
+
 #########################################
 # Add toast to environment if it exists #
 #########################################
 if test -x $HOME/.toast/armed/bin/toast
-   ~/.toast/armed/bin/toast env fish > "$TEMP_FILE"
-   . "$TEMP_FILE"
+    ~/.toast/armed/bin/toast env fish > "$TEMP_FILE"
+    . "$TEMP_FILE"
 end
 
 #####################################
@@ -25,37 +62,37 @@ set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 # perl
 set PERL_BIN_PATH /usr/bin/core_perl
 if test -d $PERL_BIN_PATH
-   set -x PATH $PERL_BIN_PATH {$PATH}
+    set -x PATH $PERL_BIN_PATH {$PATH}
 end
 perl -Mlocal::lib &>/dev/null
 if test $status = 0
-   eval (perl -Mlocal::lib)
+    eval (perl -Mlocal::lib)
 end
 
 # ruby/gem
 # only need to set if gem is installed
 which gem &>/dev/null
 if test $status = 0
-   set -x PATH (gem environment gempath | tr ':' '\n' | perl -ne "chomp \$_; if (m|^$HOME/.gem|) { print \$_ . \"\n\"; exit 0; }")/bin {$PATH}
+    set -x PATH (gem environment gempath | tr ':' '\n' | perl -ne "chomp \$_; if (m|^$HOME/.gem|) { print \$_ . \"\n\"; exit 0; }")/bin {$PATH}
 end
 
 # haskell/cabal
 set CABAL_BIN_PATH {$HOME}/.cabal/bin
 if test -d $CABAL_BIN_PATH
-   set -x PATH $CABAL_BIN_PATH {$PATH}
+    set -x PATH $CABAL_BIN_PATH {$PATH}
 end
 
 # ccache
 set CCACHE_BIN_PATH /usr/lib/ccache
 if test -d $CCACHE_BIN_PATH
-   set -x PATH $CCACHE_BIN_PATH {$PATH}
+    set -x PATH $CCACHE_BIN_PATH {$PATH}
 end
 
 # nvm
 if test -e $HOME/.nvm/nvm.sh
-   function nvm
-      bass source $HOME/.nvm/nvm.sh --no-use ';' nvm $argv
-   end
+    function nvm
+        bass source $HOME/.nvm/nvm.sh --no-use ';' nvm $argv
+    end
 end
 
 #
@@ -64,7 +101,7 @@ end
 # First Homebrew python
 set HOMEBREW_PYTHON_BIN (brew --prefix)/opt/python/libexec/bin
 if test -e $HOMEBREW_PYTHON_BIN
-   set -x PATH $HOMEBREW_PYTHON_BIN {$PATH}
+    set -x PATH $HOMEBREW_PYTHON_BIN {$PATH}
 end
 
 #
@@ -72,7 +109,7 @@ end
 #
 set RTX_SHIMS_DIR {$HOME}/.local/share/rtx/shims
 if test -d "$RTX_SHIMS_DIR"
-   set -x PATH $RTX_SHIMS_DIR {$PATH}
+    set -x PATH $RTX_SHIMS_DIR {$PATH}
 end
 
 #
@@ -80,7 +117,7 @@ end
 #
 which direnv &>/dev/null
 if test $status = 0
-   direnv hook fish | source
+    direnv hook fish | source
 end
 
 ###################
@@ -130,3 +167,8 @@ rm "$TEMP_FILE"
 # Load Solarized #
 ##################
 . $HOME/.config/fish/solarized.fish
+
+###########
+# Cleanup #
+###########
+dedupe_envvars PATH TERMINFO_DIRS
