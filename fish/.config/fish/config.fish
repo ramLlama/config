@@ -98,11 +98,6 @@ end
 #
 # Python
 #
-# First Homebrew python
-set HOMEBREW_PYTHON_BIN (brew --prefix)/opt/python/libexec/bin
-if test -e $HOMEBREW_PYTHON_BIN
-    set -x PATH $HOMEBREW_PYTHON_BIN {$PATH}
-end
 
 #
 # rtx
