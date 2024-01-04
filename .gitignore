@@ -4,3 +4,5 @@ i3/.config/i3/config
 # fish
 fish/.config/fish/conf.d/
 fish/.config/fish/fishd.llama-hyperplane
+fish/.config/fish/config.local.fish
+fish/.config/fish/fish_variables
