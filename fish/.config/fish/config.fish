@@ -95,21 +95,19 @@ if test -e $HOME/.nvm/nvm.sh
     end
 end
 
-#
-# Python
-#
+# cargo
+set CARGO_BIN_DIR {$HOME}/.cargo/bin
+if test -d "$CARGO_BIN_DIR"
+   set -x PATH "$CARGO_BIN_DIR" {$PATH}
+end
 
-#
 # rtx
-#
 set RTX_SHIMS_DIR {$HOME}/.local/share/rtx/shims
 if test -d "$RTX_SHIMS_DIR"
     set -x PATH $RTX_SHIMS_DIR {$PATH}
 end
 
-#
 # direnv
-#
 which direnv &>/dev/null
 if test $status = 0
     direnv hook fish | source
