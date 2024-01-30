@@ -155,10 +155,10 @@ set -x RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/ripgrep.rc
 ####################
 rm "$TEMP_FILE"
 
-##################
-# Load Solarized #
-##################
-. $HOME/.config/fish/solarized.fish
+##############
+# Load Theme #
+##############
+. $HOME/.config/fish/modus-vivendi-24bit.fish
 
 ###########
 # Cleanup #
