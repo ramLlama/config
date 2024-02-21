@@ -6,6 +6,12 @@ set TEMP_FILE (mktemp)
 ##################################
 set -x PATH {$PATH} /bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin
 
+#################################
+# Add local directories to PATH #
+#################################
+
+set -x PATH "$HOME/.local/bin" {$PATH}
+
 ###############
 # MacOS setup #
 ###############
