@@ -107,10 +107,10 @@ if test -d "$CARGO_BIN_DIR"
    set -x PATH "$CARGO_BIN_DIR" {$PATH}
 end
 
-# rtx
-set RTX_SHIMS_DIR {$HOME}/.local/share/rtx/shims
-if test -d "$RTX_SHIMS_DIR"
-    set -x PATH $RTX_SHIMS_DIR {$PATH}
+# mise
+set MISE_SHIMS_DIR {$HOME}/.local/share/mise/shims
+if test -d "$MISE_SHIMS_DIR"
+    set -x PATH $MISE_SHIMS_DIR (mise bin-paths) {$PATH}
 end
 
 # direnv
