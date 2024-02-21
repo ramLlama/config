@@ -57,11 +57,6 @@ if test -x $HOME/.toast/armed/bin/toast
     . "$TEMP_FILE"
 end
 
-#####################################
-# Add local scripts and bin to PATH #
-#####################################
-set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
-
 ############################################
 # Add various ecosystem-specific bin paths #
 ############################################
@@ -118,6 +113,12 @@ which direnv &>/dev/null
 if test $status = 0
     direnv hook fish | source
 end
+
+#####################################
+# Add local scripts and bin to PATH #
+#####################################
+set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
+
 
 ###################
 # ssh-agent Setup #
