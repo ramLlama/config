@@ -27,7 +27,7 @@ if test -d $HOMEBREW_BIN_DIR
         set -x LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
         set -x CFLAGS "-I/opt/homebrew/opt/llvm/include"
         set -x CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
-        set -x LDFLAGS "-L$HOMEBREW_PREFIX/opt/llvm/lib/c++"
+        set -x LDFLAGS "-L$HOMEBREW_PREFIX/opt/llvm/lib/c++ -Wl,-rpath,$HOMEBREW_PREFIX/opt/llvm/lib/c++"
     end
 
     # we're in homebrew, add relevant gnubin directories
