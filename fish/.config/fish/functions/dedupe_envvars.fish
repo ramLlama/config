@@ -10,7 +10,6 @@ function dedupe_envvars --description 'Remove duplicates from environment variab
             end
         end
         set $argv $newvar
-        test $count -gt 0 && echo Removed $count duplicates from $argv || true
     else
         for a in $argv
             dedupe_envvars $a

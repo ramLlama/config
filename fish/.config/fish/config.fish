@@ -4,13 +4,13 @@ set TEMP_FILE (mktemp)
 ##################################
 # Add system directories to PATH #
 ##################################
-set -x PATH {$PATH} /bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin
+fish_add_path --append /bin /usr/bin /usr/local/bin /sbin /usr/sbin /usr/local/sbin
 
 #################################
 # Add local directories to PATH #
 #################################
 
-set -x PATH "$HOME/.local/bin" {$PATH}
+fish_add_path "$HOME/.local/bin"
 
 ###############
 # MacOS setup #
@@ -18,18 +18,16 @@ set -x PATH "$HOME/.local/bin" {$PATH}
 # Use homebrew as test of "am I on MacOS?"
 set HOMEBREW_BIN_DIR /opt/homebrew/bin
 if test -d $HOMEBREW_BIN_DIR
-    set -x PATH $HOMEBREW_BIN_DIR {$PATH}
+    fish_add_path $HOMEBREW_BIN_DIR
     brew shellenv fish | source
 
     # Add LLVM paths if installed
     if test -d $HOMEBREW_PREFIX/opt/llvm
-        set -x PATH $HOMEBREW_PREFIX/opt/llvm/bin {$PATH}
-        set -x CPATH $HOMEBREW_PREFIX/opt/llvm/include {$CPATH}
-        set -x LIBRARY_PATH \
-            $HOMEBREW_PREFIX/opt/llvm/lib \
-            $HOMEBREW_PREFIX/opt/llvm/lib/c++ \
-            {$LIBRARY_PATH}
-        set -x LDFLAGS "-Wl,-rpath,$HOMEBREW_PREFIX/opt/llvm/lib/c++"
+        fish_add_path $HOMEBREW_PREFIX/opt/llvm/bin
+        set -x LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
+        set -x CFLAGS "-I/opt/homebrew/opt/llvm/include"
+        set -x CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
+        set -x LDFLAGS "-L$HOMEBREW_PREFIX/opt/llvm/lib/c++"
     end
 
     # we're in homebrew, add relevant gnubin directories
@@ -37,24 +35,12 @@ if test -d $HOMEBREW_BIN_DIR
         $HOMEBREW_PREFIX/opt/findutils/libexec/gnubin \
         $HOMEBREW_PREFIX/opt/make/libexec/gnubin
         if test -d $GNU_BIN_DIR
-            set -x PATH $GNU_BIN_DIR {$PATH}
+            fish_add_path $GNU_BIN_DIR
         end
     end
 
-    # Prefix standard header and library paths
-    set -x CPATH $HOMEBREW_PREFIX/include {$CPATH}
-    set -x LIBRARY_PATH $HOMEBREW_PREFIX/lib {$LIBRARY_PATH}
-
     # terminfo
     set -x TERMINFO_DIRS {$TERMINFO_DIRS} $HOME/.local/share/terminfo
-end
-
-#########################################
-# Add toast to environment if it exists #
-#########################################
-if test -x $HOME/.toast/armed/bin/toast
-    ~/.toast/armed/bin/toast env fish > "$TEMP_FILE"
-    . "$TEMP_FILE"
 end
 
 ############################################
@@ -63,7 +49,7 @@ end
 # perl
 set PERL_BIN_PATH /usr/bin/core_perl
 if test -d $PERL_BIN_PATH
-    set -x PATH $PERL_BIN_PATH {$PATH}
+    fish_add_path $PERL_BIN_PATH
 end
 perl -Mlocal::lib &>/dev/null
 if test $status = 0
@@ -74,38 +60,31 @@ end
 # only need to set if gem is installed
 which gem &>/dev/null
 if test $status = 0
-    set -x PATH (gem environment gempath | tr ':' '\n' | perl -ne "chomp \$_; if (m|^$HOME/.gem|) { print \$_ . \"\n\"; exit 0; }")/bin {$PATH}
+    fish_add_path (gem environment gempath | tr ':' '\n' | perl -ne "chomp \$_; if (m|^$HOME/.gem|) { print \$_ . \"\n\"; exit 0; }")/bin
 end
 
 # haskell/cabal
 set CABAL_BIN_PATH {$HOME}/.cabal/bin
 if test -d $CABAL_BIN_PATH
-    set -x PATH $CABAL_BIN_PATH {$PATH}
+    fish_add_path $CABAL_BIN_PATH
 end
 
 # ccache
 set CCACHE_BIN_PATH /usr/lib/ccache
 if test -d $CCACHE_BIN_PATH
-    set -x PATH $CCACHE_BIN_PATH {$PATH}
-end
-
-# nvm
-if test -e $HOME/.nvm/nvm.sh
-    function nvm
-        bass source $HOME/.nvm/nvm.sh --no-use ';' nvm $argv
-    end
+    fish_add_path $CCACHE_BIN_PATH
 end
 
 # cargo
 set CARGO_BIN_DIR {$HOME}/.cargo/bin
 if test -d "$CARGO_BIN_DIR"
-   set -x PATH "$CARGO_BIN_DIR" {$PATH}
+   fish_add_path "$CARGO_BIN_DIR"
 end
 
 # mise
 set MISE_SHIMS_DIR {$HOME}/.local/share/mise/shims
 if test -d "$MISE_SHIMS_DIR"
-    set -x PATH $MISE_SHIMS_DIR (mise bin-paths) {$PATH}
+    fish_add_path $MISE_SHIMS_DIR (mise bin-paths)
 end
 
 # direnv
@@ -117,7 +96,7 @@ end
 #####################################
 # Add local scripts and bin to PATH #
 #####################################
-set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
+fish_add_path {$HOME}/scripts {$HOME}/bin
 
 
 ###################
@@ -126,7 +105,7 @@ set -x PATH {$HOME}/scripts {$HOME}/bin {$PATH}
 set -x SSH_AUTH_SOCK {$HOME}/.ssh/ssh-agent-socket
 if status --is-interactive
     # Start, if necessary, ssh-agent
-    # Stolen from https://gist.github.com/daniel-perry/3251940
+    # Copied from https://gist.github.com/daniel-perry/3251940
     ssh-add -l 2> /dev/null > "$TEMP_FILE"
     set SSH_ADD_STATUS $status
     set SSH_AGENT_NUM_KEYS (cat "$TEMP_FILE" | wc -l)
@@ -146,11 +125,6 @@ end
 # Other environment variables #
 ###############################
 set -x EDITOR editor
-
-####################
-# Deduplicate PATH #
-####################
-set -x PATH (echo $PATH | tr ' ' '\n' | perl -ne 'BEGIN { %seen = (); } chomp $_; if (!defined($seen{$_})) { print $_ . "\n"; $seen{$_} = 1; }')
 
 ##########################################
 # Program-specific Environment Variables #
