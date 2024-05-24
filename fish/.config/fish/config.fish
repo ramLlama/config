@@ -27,7 +27,6 @@ if test -d $HOMEBREW_BIN_DIR
         set -x LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
         set -x CFLAGS "-I/opt/homebrew/opt/llvm/include"
         set -x CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
-        set -x LDFLAGS "-L$HOMEBREW_PREFIX/opt/llvm/lib/c++ -Wl,-rpath,$HOMEBREW_PREFIX/opt/llvm/lib/c++"
     end
 
     # we're in homebrew, add relevant gnubin directories
@@ -39,8 +38,12 @@ if test -d $HOMEBREW_BIN_DIR
         end
     end
 
+    # Prefix standard header and library paths
+    set -x CPATH $HOMEBREW_PREFIX/include {$CPATH}
+    set -x LIBRARY_PATH $HOMEBREW_PREFIX/lib {$LIBRARY_PATH}
+
     # terminfo
-    set -x TERMINFO_DIRS {$TERMINFO_DIRS} $HOME/.local/share/terminfo
+    set -x TERMINFO_DIRS {$HOMEBREW_PREFIX}/opt/ncurses/share/terminfo:{$TERMINFO_DIRS}
 end
 
 ############################################
@@ -144,7 +147,7 @@ rm "$TEMP_FILE"
 ###########
 # Cleanup #
 ###########
-dedupe_envvars PATH TERMINFO_DIRS
+dedupe_envvars PATH TERMINFO_DIRS LIBRARY_PATH
 
 #####################
 # Load local config #
