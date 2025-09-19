@@ -1,0 +1,3 @@
+# ripgrep setup
+
+set -x RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/ripgrep.rc
