@@ -1,0 +1,42 @@
+# name: 'Modus Vivendi (24bit)'
+# Note: requires fish_term24bit=1 (set separately, not supported in theme files)
+
+# Color palette:
+# black:     000000 (0)    brblack:   595959 (8)
+# red:       ff8059 (1)    brred:     ef8b50 (9)
+# green:     44bc44 (2)    brgreen:   70b900 (10)
+# yellow:    d0bc00 (3)    bryellow:  c0c530 (11)
+# blue:      2fafff (4)    brblue:    79a8ff (12)
+# magenta:   feacd0 (5)    brmagenta: b6a0ff (13)
+# cyan:      00d3d0 (6)    brcyan:    6ae4b9 (14)
+# white:     bfbfbf (7)    brwhite:   ffffff (15)
+
+[dark]
+# preferred_background: 000000
+fish_color_normal normal
+fish_color_autosuggestion c0c530  # bryellow (11)
+fish_color_cancel -r
+fish_color_command 2fafff  # blue (4)
+fish_color_comment ff8059  # red (1)
+fish_color_cwd 44bc44  # green (2)
+fish_color_cwd_root ff8059  # red (1)
+fish_color_end 44bc44  # green (2)
+fish_color_error ef8b50  # brred (9)
+fish_color_escape 6ae4b9  # brcyan (14)
+fish_color_history_current --bold
+fish_color_host normal
+fish_color_host_remote d0bc00  # yellow (3)
+fish_color_operator 6ae4b9  # brcyan (14)
+fish_color_param 00d3d0  # cyan (6)
+fish_color_quote d0bc00  # yellow (3)
+fish_color_redirection 00d3d0 --bold  # cyan (6)
+fish_color_search_match c0c530 --background=595959  # bryellow (11) on brblack (8)
+fish_color_selection bfbfbf --bold --background=595959  # white (7) on brblack (8)
+fish_color_status ff8059  # red (1)
+fish_color_user 70b900  # brgreen (10)
+fish_color_valid_path --underline
+fish_pager_color_completion normal
+fish_pager_color_description d0bc00 -i  # yellow (3)
+fish_pager_color_prefix normal --bold --underline
+fish_pager_color_progress ffffff --background=00d3d0  # brwhite (15) on cyan (6)
+fish_pager_color_selected_background -r
