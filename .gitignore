@@ -1,3 +1,6 @@
 # fish
 fish/.config/fish/config.local.fish
 fish/.config/fish/fish_variables
+
+# claude
+claude/.claude/settings.json
