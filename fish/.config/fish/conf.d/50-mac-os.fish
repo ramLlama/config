@@ -3,12 +3,12 @@
 # Use homebrew as test of "am I on MacOS?"
 set HOMEBREW_BIN_DIR /opt/homebrew/bin
 if test -d $HOMEBREW_BIN_DIR
-    fish_add_path $HOMEBREW_BIN_DIR
+    fish_add_path -g -m $HOMEBREW_BIN_DIR
     brew shellenv fish | source
 
     # Add LLVM paths if installed
     if test -d $HOMEBREW_PREFIX/opt/llvm
-        fish_add_path $HOMEBREW_PREFIX/opt/llvm/bin
+        fish_add_path -g -m $HOMEBREW_PREFIX/opt/llvm/bin
         set -x LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
         set -x CFLAGS "-I/opt/homebrew/opt/llvm/include"
         set -x CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
@@ -19,7 +19,7 @@ if test -d $HOMEBREW_BIN_DIR
         $HOMEBREW_PREFIX/opt/findutils/libexec/gnubin \
         $HOMEBREW_PREFIX/opt/make/libexec/gnubin
         if test -d $GNU_BIN_DIR
-            fish_add_path $GNU_BIN_DIR
+            fish_add_path -g -m $GNU_BIN_DIR
         end
     end
 
