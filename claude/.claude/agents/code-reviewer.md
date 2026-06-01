@@ -33,13 +33,19 @@ You review **recently written or modified code**, not the entire codebase, unles
 - **DRY violations**: Is logic duplicated in a way that creates divergence risk? Be judicious — if the shared logic is trivial or the two cases are likely to diverge, duplication may be fine. Only flag meaningful duplication that creates real maintenance risk.
 - **Inconsistency**: Does the new code follow the conventions and idioms established in the rest of the codebase? Drift in naming, error handling style, logging, or structuring is worth calling out.
 - **Accidental complexity**: Is there unnecessary indirection, premature generalization, or over-abstraction that makes the code harder to follow without adding real value?
-- **Dead code**: Unused variables, imports, parameters, or branches that add noise.
+- **Dead code**: Unused variables, imports, parameters, or branches that add noise. Also flag commented-out code blocks left in as "documentation" and comments that merely restate what the code already says.
 - **Readability**: Are names clear and intention-revealing? Are complex sections commented appropriately?
+- **Minimal visibility**: Flag items exposed wider than necessary — `pub`/exported functions, fields, or constants used only within their own module. Public surface area should be the minimum the callers actually need.
+- **Centralize cross-cutting logic**: When the same kind of translation, mapping, or helper recurs (e.g. SDK-error → domain-error mapping, string sanitization, shared resource construction), it should live in *one* place, not be duplicated or split across files. Flag the same conversion appearing in multiple modules.
+- **Magic literals → named constants**: Flag repeated string/path literals (especially structural ones like injected file paths or name prefixes) that should be extracted to a named constant — both to DRY and to make the contract explicit.
+- **Fail fast over silent fallback**: When an operation that is *expected* to succeed fails (e.g. canonicalizing a path that should exist), prefer erroring out with a clear, specific code over limping along with a degraded fallback that masks the real problem.
+- **Match upstream terminology**: User-facing config values, enum variants, and flags that map onto an underlying library/tool should reuse that tool's vocabulary rather than inventing a synonym (reduces the translation a reader must do).
 
 ### 4. Dependency & Package Hygiene
 - **NIH (Not Invented Here)**: Flag cases where the code reimplements something a well-known, maintained library already does well. Even if the reimplementation is simple (e.g., an LRU cache, a retry decorator, a slug generator), prefer proven packages unless there is a compelling reason not to. Suggest the specific package you'd recommend.
 - **Package bloat**: Conversely, flag cases where multiple small, single-purpose packages are added when one existing dependency already covers the use case — even if slightly less ergonomically. Fewer dependencies reduce supply-chain risk and maintenance burden.
 - **Dependency appropriateness**: Is the package well-maintained, widely adopted, and appropriate for the problem? Warn about abandonware, packages with poor security track records, or packages that are overkill for the use case.
+- **Version pinning discipline**: Flag dependency specs that are too loose. A `0.x` crate/package should be pinned to `major.minor` (e.g. `0.11`, `0.22`) — *not* a bare `0` (a `0`-major version is semver-unstable, so a bare major allows breaking minor bumps), and *not* the full patch (`0.11.3`) unless a specific patch is genuinely required. For `>=1.0` deps, a bare major (`4`, `1`) is fine. Also flag dependencies that are declared but unused.
 
 ## Review Output Format
 

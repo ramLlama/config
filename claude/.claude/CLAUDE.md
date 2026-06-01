@@ -83,6 +83,17 @@ Match the **project's existing style first**. Only fall back to the preferences 
 * comment lines that are non-trivial or blocks that do a non-trivial piece of work. For example, put a comment on what a full loop block does, but not individual lines of it
 * Be judicious! Comments that don't add more info than just reading the line + common intuition are discouraged
 
+### Design & Dependencies
+
+These are cross-language preferences (apply when no project convention overrides):
+
+* **Minimal visibility**: don't make an item public/`pub`/exported unless it is actually used outside its module. Default to the narrowest visibility.
+* **Centralize cross-cutting logic**: the same kind of translation/mapping/helper (e.g. SDK-error → domain-error mapping, string sanitization, shared-resource construction) belongs in *one* place. Don't duplicate it or split it across files. A repeated literal (path, name prefix) → a named constant.
+* **Fail fast over silent fallback**: when an operation that *should* succeed fails (e.g. canonicalizing a path that ought to exist), error out with a clear, specific code rather than limping along with a degraded fallback that hides the real problem.
+* **Match upstream terminology**: user-facing config values / enum variants / flags that map onto an underlying library or tool should reuse that tool's vocabulary, not a synonym.
+* **No dead code**: don't leave commented-out blocks as "documentation", and remove dependencies once they're unused.
+* **Dependency version pinning**: pin a `0.x` dependency to `major.minor` (e.g. `0.11`, not bare `0` and not full patch `0.11.3`) — a `0`-major is semver-unstable so a bare major allows breaking bumps. `>=1.0` deps can use a bare major.
+
 ### Python
 
 - **Explicit checks over boolean coercion**: Use `if len(container) == 0` instead of `if not container`. More generally, prefer explicit comparisons rather than relying on truthiness/falsiness of objects.
