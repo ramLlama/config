@@ -53,6 +53,10 @@ Use subagents deliberately to keep the main context window clean:
 
 Delegate early and often rather than bloating the primary context with exploratory work.
 
+## Reasoning & Diagnosis
+
+**Follow the data, not the story.** When diagnosing a problem, don't stop gathering evidence once you have a hypothesis that fits some of the data. If the numbers don't fully account for the phenomenon, keep digging. Declaring a root cause before the evidence actually explains the full picture is confirmation bias.
+
 ## CLAUDE.md Maintenance
 
 - When the user indicates a preference or correction you weren't aware of, update this file (or a linked topic file) so it persists.
