@@ -34,8 +34,10 @@ If the user explicitly says "write to a file" or "save to a file", use file mode
 5. **Draft the PR description** with this structure:
 
 ```
-# AI Disclaimer
+**AI Disclaimer**
 This PR summary and description were written with the aid of Claude. The following commits were implemented with the aid of AI: <short SHAs, comma-separated>
+
+---
 
 <Short description paragraph — 2-4 sentences explaining what this PR does and why>
 
