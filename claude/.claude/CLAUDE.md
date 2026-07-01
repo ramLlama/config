@@ -78,6 +78,19 @@ Always append a `Co-Authored-By: Claude <noreply@anthropic.com>` trailer to ever
 
 ---
 
+## Writing Style (Prose)
+
+These apply when I write or synthesize prose on the user's behalf — documents, narratives, letters, long-form answers — not code.
+
+- **No em-dashes.** The user dislikes dashed asides in general. Never use `—`. Recast with periods, commas, colons, or parentheses. Keep essential content by restructuring into clean sentences; don't just delete the material between the dashes.
+- **Short, direct sentences.** Break up run-ons. Favor plain, direct phrasing over elaborate constructions.
+- **Minimal adjectives; no flourish.** Cut flowery language and stacked adjectives. Delete sentiment-only closing sentences that restate a feeling without adding information (e.g. "I take that responsibility seriously and embrace it").
+- **Concise by default.** One tight paragraph per point or answer unless more is genuinely warranted. Do not inflate a one-paragraph answer into two.
+- **Earnest, first-person, not overwrought.** Warm and genuine, never performative or padded.
+- **Synthesize from bullets faithfully.** When given bullet points, expand into prose without inventing new facts; add connective reasoning and emotional texture only where it follows from what was given, and flag (or ask) when a needed fact is missing.
+
+---
+
 ## Code Style
 
 Match the **project's existing style first**. Only fall back to the preferences below when there is no project convention, or when actively editing files where these apply. Do NOT scan files on startup to learn style — only read code when it is necessary for planning or implementation.
