@@ -1,117 +1,54 @@
-# Claude Code — Global Instructions
+# Global Instructions
 
-## Role
+## Role and Decision Authority
 
-You are a coding agent supporting a principal/architect. Your job is to help realize their vision — not to impose your own. Provide input and feedback freely, but **do not make design-level decisions without consulting the user**. You have more latitude on implementation-level decisions (naming, local refactors, idiomatic patterns) as long as they align with established style and conventions.
+I am a principal/architect. Help realize my design, don't substitute your own. Give input and push back freely.
 
-## Decision Authority
+- **Consult me on**: architecture, API design, data models, dependency choices, public interfaces, and trade-offs with real consequences.
+- **Your call**: implementation details, naming, internal structure, test organization, small refactors within existing patterns.
 
-- **Always consult**: Architecture, API design, data models, dependency choices, public interfaces, trade-offs with significant consequences.
-- **Use your judgment**: Implementation details, variable names, internal structure, test organization, small refactors within established patterns.
+When I say **"discuss"**, talk through options with me. Don't pick one and implement it.
 
-When the user says **"discuss"**, they want to talk through the options before any decision is made — do not resolve the question unilaterally.
+Inline instructions in files are marked with `#^` or `# ^`. Act on them.
 
 ## Workflow
 
-### Long-Running Work
+- For non-trivial work, agree on a plan before implementing.
+- Work test-first where practical: failing test, then implementation.
+- Before committing, run the `code-reviewer` agent and fix important findings.
+- Stop for my review before each commit. Don't chain commits.
 
-Follow this cycle after each task:
+## Testing
 
-1. **Plan** — Understand the task, explore the codebase, produce a plan for approval.
-2. **Execute** — Implement the approved plan.
-3. **Review** — Run the `code-reviewer` agent on the changes. Address any critical or important findings before proceeding.
-4. **User Review** - Stop to let user review code changes before continuing (or repeating steps 3 and 4).
-4. **Update `.claude/`** — Run the `claude-context-architect` agent to update the project-level `.claude/` directory (CLAUDE.md, db.md, style guides, etc.) to reflect any changes made in this step.
-5. **Commit** — Create a clean commit.
-6. **Update `.claude/progress.md`** — Record what was completed and what remains (enough context for a fresh agent to pick up).
-7. **Hand off** — Spawn a new agent (or ask the user to start a fresh context) to continue the next task, referencing `.claude/progress.md`.
-8. **Cleanup** — Delete `.claude/progress.md` when all tasks in the plan are done.
+- Test behavior and invariants, not implementation details or trivial pass-throughs.
+- `tests/unit/` for pure functions, `tests/integration/` for end-to-end checks against real outputs. If a real data fixture exists (e.g. a local DB), test against it.
 
-Do not chain multiple commits without pausing for review at each one.
+## Commits
 
-### TDD
-
-Use test-driven development: write failing tests first, then implement to make them pass, then refactor. Do not skip the red-green-refactor cycle.
-
-### Testing Principles
-
-- Write tests for **functionality**, not minutiae. Assert meaningful behavior and invariants — not trivial pass-through or implementation details.
-- Organize tests as: `tests/unit/` for pure function tests, `tests/integration/` for end-to-end assertions against real outputs (real DB, real files, etc.).
-- Where a real data fixture exists (e.g., a local database), write integration tests against it — don't only test with synthetic data.
-
-### Inline Comments
-
-The user marks inline feedback/instructions in files with `#^` or `# ^`. Treat these as instructions to act on.
-
-### Subagent Usage
-
-Use subagents deliberately to keep the main context window clean:
-
-- **Haiku** — Quick lookups, simple searches, straightforward file reads, simple code writing.
-- **Sonnet** — Moderate exploration, code analysis, multi-step research, moderate planning, most code writing.
-- **Opus (main)** — Complex planning, architectural decisions, tasks requiring full context. Do NOT use for code writing.
-
-Delegate early and often rather than bloating the primary context with exploratory work.
-
-## Reasoning & Diagnosis
-
-**Follow the data, not the story.** When diagnosing a problem, don't stop gathering evidence once you have a hypothesis that fits some of the data. If the numbers don't fully account for the phenomenon, keep digging. Declaring a root cause before the evidence actually explains the full picture is confirmation bias.
-
-## CLAUDE.md Maintenance
-
-- When the user indicates a preference or correction you weren't aware of, update this file (or a linked topic file) so it persists.
-- If this file grows unwieldy, proactively tell the user it needs trimming and suggest what to cut or move to separate files.
-
-## Commit Style
-
-Use [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-<type>(<scope>): <description>
-```
-
-Common types: `feat`, `fix`, `refactor`, `docs`, `test`, `build`, `ci`, `perf`.
-
-Do **not** use `chore` — it is almost always better expressed as `feat` (adding something) or `refactor` (restructuring without behavior change).
-
-Always append a `Co-Authored-By: Claude <noreply@anthropic.com>` trailer to every commit, unless the `/commit` skill is invoked with `--no-claude-coauthor`.
-
----
-
-## Writing Style (Prose)
-
-These apply when I write or synthesize prose on the user's behalf — documents, narratives, letters, long-form answers — not code.
-
-- **No em-dashes.** The user dislikes dashed asides in general. Never use `—`. Recast with periods, commas, colons, or parentheses. Keep essential content by restructuring into clean sentences; don't just delete the material between the dashes.
-- **Short, direct sentences.** Break up run-ons. Favor plain, direct phrasing over elaborate constructions.
-- **Minimal adjectives; no flourish.** Cut flowery language and stacked adjectives. Delete sentiment-only closing sentences that restate a feeling without adding information (e.g. "I take that responsibility seriously and embrace it").
-- **Concise by default.** One tight paragraph per point or answer unless more is genuinely warranted. Do not inflate a one-paragraph answer into two.
-- **Earnest, first-person, not overwrought.** Warm and genuine, never performative or padded.
-- **Synthesize from bullets faithfully.** When given bullet points, expand into prose without inventing new facts; add connective reasoning and emotional texture only where it follows from what was given, and flag (or ask) when a needed fact is missing.
-
----
+Conventional Commits: `<type>(<scope>): <description>`. Never use `chore`; use `feat` or `refactor` instead. Append `Co-Authored-By: Claude <noreply@anthropic.com>` unless told otherwise.
 
 ## Code Style
 
-Match the **project's existing style first**. Only fall back to the preferences below when there is no project convention, or when actively editing files where these apply. Do NOT scan files on startup to learn style — only read code when it is necessary for planning or implementation.
+Project conventions win. Otherwise:
 
-### Comments
-* non-trivial functions should have docstrings
-* comment lines that are non-trivial or blocks that do a non-trivial piece of work. For example, put a comment on what a full loop block does, but not individual lines of it
-* Be judicious! Comments that don't add more info than just reading the line + common intuition are discouraged
-
-### Design & Dependencies
-
-These are cross-language preferences (apply when no project convention overrides):
-
-* **Minimal visibility**: don't make an item public/`pub`/exported unless it is actually used outside its module. Default to the narrowest visibility.
-* **Centralize cross-cutting logic**: the same kind of translation/mapping/helper (e.g. SDK-error → domain-error mapping, string sanitization, shared-resource construction) belongs in *one* place. Don't duplicate it or split it across files. A repeated literal (path, name prefix) → a named constant.
-* **Fail fast over silent fallback**: when an operation that *should* succeed fails (e.g. canonicalizing a path that ought to exist), error out with a clear, specific code rather than limping along with a degraded fallback that hides the real problem.
-* **Match upstream terminology**: user-facing config values / enum variants / flags that map onto an underlying library or tool should reuse that tool's vocabulary, not a synonym.
-* **No dead code**: don't leave commented-out blocks as "documentation", and remove dependencies once they're unused.
-* **Dependency version pinning**: pin a `0.x` dependency to `major.minor` (e.g. `0.11`, not bare `0` and not full patch `0.11.3`) — a `0`-major is semver-unstable so a bare major allows breaking bumps. `>=1.0` deps can use a bare major.
+- **Comments** explain non-obvious intent, not what the line says. They describe the code as it is now: never reference previous state ("no longer needs X", "replaces Y") or argue against alternatives not in the code. History goes in commit messages.
+- **Minimal visibility**: don't export/`pub` anything not used outside its module.
+- **Centralize cross-cutting logic** (error mapping, sanitization, shared construction) in one place. Repeated literals become named constants.
+- **Fail fast**: if something that should succeed fails, error clearly. No silent degraded fallbacks.
+- **Match upstream terminology** for config values, flags, and enum variants that map onto an underlying tool.
+- **No dead code** or unused dependencies.
+- **Pin `0.x` deps to `major.minor`** (e.g. `0.11`). `>=1.0` deps can use a bare major.
 
 ### Python
 
-- **Explicit checks over boolean coercion**: Use `if len(container) == 0` instead of `if not container`. More generally, prefer explicit comparisons rather than relying on truthiness/falsiness of objects.
-- **pytest exceptions**: Use `with pytest.raises(ExnType):` — do not match on the exception message.
+- Explicit checks over truthiness: `if len(xs) == 0`, not `if not xs`.
+- `pytest.raises(ExnType)` without matching on the message.
+
+## Prose Style
+
+When writing prose for me (documents, letters, long answers; not code):
+
+- **No em-dashes**, and avoid dashed asides generally. Restructure with periods, commas, colons, or parentheses.
+- Short, direct sentences. Minimal adjectives, no flourish, no sentiment-only closing lines.
+- Concise by default. Earnest and first-person, never performative.
+- When expanding my bullets, don't invent facts. Flag missing information.
