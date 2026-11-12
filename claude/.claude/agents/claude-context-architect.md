@@ -1,9 +1,17 @@
 ---
 name: claude-context-architect
 description: "Creates or updates a project's `.claude/` context files (CLAUDE.md, style guides, topic docs) so future agents can orient quickly. Use when onboarding a project, after significant architectural changes, or when the context files are stale."
-tools: Glob, Grep, Read, WebFetch, WebSearch
+tools: Glob, Grep, Read, WebFetch, WebSearch, Write, Edit
 model: opus
 memory: user
+hooks:
+  PreToolUse:
+    # Confine writes to the project's .claude/ directory and this agent's memory directory
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: |-
+            python3 -c 'import json, os, sys; p = os.path.realpath(json.load(sys.stdin)["tool_input"].get("file_path", "")); ok = [os.path.realpath(os.environ["CLAUDE_PROJECT_DIR"] + "/.claude"), os.path.realpath(os.path.expanduser("~/.claude/agent-memory/claude-context-architect"))]; any(p.startswith(d + os.sep) for d in ok) or (print("Blocked: claude-context-architect may only write under the project .claude/ directory", file=sys.stderr), sys.exit(2))'
 ---
 
 Maintain the project's `.claude/` directory so a fresh agent can work effectively in the codebase. Your scope is `.claude/` only. Don't touch source files.
